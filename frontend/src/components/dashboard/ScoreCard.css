@@ -1,15 +1,12 @@
 .score-card {
   padding: 20px 18px 16px;
   position: relative;
-  overflow: hidden;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
   min-height: 190px;
   justify-content: center;
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 16px;
 }
 
 .score-glow {
@@ -18,7 +15,8 @@
   pointer-events: none;
   opacity: 0.7;
   transition: background 1s ease;
-  border-radius: inherit;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 .score-title {
