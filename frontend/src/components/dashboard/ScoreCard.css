@@ -7,7 +7,9 @@
   align-items: center;
   gap: 6px;
   min-height: 190px;
+  height: 100%;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 /* Dynamic glow via CSS custom property set inline on the card element */
