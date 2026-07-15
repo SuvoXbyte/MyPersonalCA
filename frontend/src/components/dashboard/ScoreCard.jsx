@@ -32,7 +32,7 @@ const CircleProgress = ({ value, max, size = 108, strokeWidth = 9 }) => {
   }, [value, max, circumference]);
 
   return (
-    <svg width={size} height={size} className="score-ring">
+    <svg width={size} height={size} className="score-ring" style={{ overflow: 'visible' }}>
       {/* Track ring */}
       <circle
         cx={size / 2} cy={size / 2} r={radius}
