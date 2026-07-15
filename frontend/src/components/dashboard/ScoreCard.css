@@ -1,6 +1,7 @@
 .score-card {
   padding: 20px 18px 16px;
   position: relative;
+  overflow: hidden;          /* clips glow + SVG to card's rounded corners */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -9,14 +10,25 @@
   justify-content: center;
 }
 
-.score-glow {
+/* Dynamic glow via CSS custom property set inline on the card element */
+.score-card::before {
+  content: '';
   position: absolute;
   inset: 0;
+  background: radial-gradient(
+    ellipse at center,
+    var(--score-glow, transparent) 0%,
+    transparent 70%
+  );
   pointer-events: none;
-  opacity: 0.7;
+  z-index: 0;
   transition: background 1s ease;
-  border-radius: 12px;
-  overflow: hidden;
+}
+
+/* All direct children float above the ::before glow */
+.score-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .score-title {
@@ -51,7 +63,7 @@
 .score-fraction {
   display: flex;
   align-items: baseline;
-  gap: 1px;
+  gap: 2px;
   line-height: 1;
 }
 
@@ -68,7 +80,6 @@
   color: inherit;
   opacity: 0.7;
   line-height: 1;
-  margin-bottom: 1px;
 }
 
 .score-label {
@@ -103,12 +114,12 @@
   letter-spacing: -0.5px;
 }
 
-/* Pulse animation on excellent score */
-@keyframes score-pulse {
-  0%, 100% { opacity: 0.7; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.06); }
+/* Pulse glow animation for excellent score */
+@keyframes score-glow-pulse {
+  0%, 100% { opacity: 0.5; }
+  50%       { opacity: 1;   }
 }
 
-.score-card:has(.score-number[style*="#10b981"]) .score-glow {
-  animation: score-pulse 3s ease-in-out infinite;
+.score-card.score-excellent::before {
+  animation: score-glow-pulse 3s ease-in-out infinite;
 }
