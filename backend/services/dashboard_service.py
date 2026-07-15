@@ -174,6 +174,47 @@ async def get_dashboard_data() -> dict:
         total = result[0]["total"] if result else 0.0
         monthly_trend.append({"month": m_str, "total": round(total, 2)})
 
+    # --- Daily Budget Calculations ---
+    import pytz
+    kolkata_tz = pytz.timezone("Asia/Kolkata")
+    local_now = datetime.now(kolkata_tz)
+    local_today = local_now.date()
+
+    days_in_month_local = calendar.monthrange(local_today.year, local_today.month)[1]
+    remaining_days = days_in_month_local - local_today.day + 1
+
+    total_budget_limit = sum(b.get("monthly_limit", 0.0) for b in budgets)
+
+    pipeline_month = [
+        {
+            "$match": {
+                "date": {"$gte": month_start, "$lte": month_end}
+            }
+        },
+        {"$group": {"_id": None, "total": {"$sum": "$amount"}}},
+    ]
+    result_month = await db.payments.aggregate(pipeline_month).to_list(length=1)
+    total_spent_this_month = result_month[0]["total"] if result_month else 0.0
+
+    today_start_local = datetime(local_today.year, local_today.month, local_today.day, 0, 0, 0)
+    today_end_local = datetime(local_today.year, local_today.month, local_today.day, 23, 59, 59)
+    today_start_utc = kolkata_tz.localize(today_start_local).astimezone(timezone.utc)
+    today_end_utc = kolkata_tz.localize(today_end_local).astimezone(timezone.utc)
+
+    pipeline_today = [
+        {
+            "$match": {
+                "date": {"$gte": today_start_utc, "$lte": today_end_utc}
+            }
+        },
+        {"$group": {"_id": None, "total": {"$sum": "$amount"}}},
+    ]
+    result_today = await db.payments.aggregate(pipeline_today).to_list(length=1)
+    spent_today = result_today[0]["total"] if result_today else 0.0
+
+    remaining_budget = max(0.0, total_budget_limit - total_spent_this_month)
+    daily_budget = remaining_budget / remaining_days if total_budget_limit > 0 and remaining_days > 0 else 0.0
+
     return {
         "balance": {
             "current": current_balance,
@@ -189,4 +230,9 @@ async def get_dashboard_data() -> dict:
         "monthly_trend": monthly_trend,
         "category_breakdown": category_breakdown,
         "habit_streak": habit_streak,
+        "daily_budget": {
+            "limit": round(daily_budget, 2),
+            "spent_today": round(spent_today, 2),
+            "remaining_days": remaining_days,
+        },
     }

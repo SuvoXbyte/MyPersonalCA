@@ -58,6 +58,12 @@ class CategoryBreakdownItem(BaseModel):
     amount: float
 
 
+class DailyBudgetInfo(BaseModel):
+    limit: float
+    spent_today: float
+    remaining_days: int
+
+
 class DashboardResponse(BaseModel):
     balance: BalanceInfo
     projected_balance: float
@@ -69,3 +75,4 @@ class DashboardResponse(BaseModel):
     monthly_trend: List[MonthlyTrendItem]
     category_breakdown: List[CategoryBreakdownItem]
     habit_streak: int
+    daily_budget: DailyBudgetInfo

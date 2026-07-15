@@ -9,6 +9,7 @@ import BudgetProgressCard from '../components/dashboard/BudgetProgressCard';
 import SpendingTrendChart from '../components/dashboard/SpendingTrendChart';
 import CategoryPieChart from '../components/dashboard/CategoryPieChart';
 import StreakBadge from '../components/dashboard/StreakBadge';
+import DailyBudgetCard from '../components/dashboard/DailyBudgetCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import './DashboardPage.css';
 
@@ -66,9 +67,10 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      {/* Row 1: Balance + Streak */}
+      {/* Row 1: Balance + Daily Budget + Streak */}
       <div className="dashboard-top-row">
         <BalanceCard data={data} />
+        <DailyBudgetCard dailyBudget={data?.daily_budget} />
         <StreakBadge
           streak={data?.habit_streak ?? 0}
           message={data?.streak_message}
