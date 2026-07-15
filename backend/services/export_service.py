@@ -137,7 +137,7 @@ async def generate_expense_report_image(
     y_cursor -= 0.03
 
     # Divider line
-    ax.axhline(y=y_cursor, xmin=0.02, xmax=0.98, color=ACCENT_COLOR, linewidth=0.8, transform=ax.transAxes)
+    ax.axhline(y=y_cursor, xmin=0.02, xmax=0.98, color=ACCENT_COLOR, linewidth=0.8)
     y_cursor -= 0.025
 
     if not rows:
@@ -219,7 +219,7 @@ async def generate_expense_report_image(
     y_cursor -= row_h + 0.02
 
     # Category summary section
-    ax.axhline(y=y_cursor + 0.005, xmin=0.02, xmax=0.98, color=ACCENT_COLOR, linewidth=0.5, transform=ax.transAxes)
+    ax.axhline(y=y_cursor + 0.005, xmin=0.02, xmax=0.98, color=ACCENT_COLOR, linewidth=0.5)
     y_cursor -= 0.01
     draw_text("Category Summary", 0.02, y_cursor, fontsize=12, color=ACCENT_COLOR, weight="bold")
     y_cursor -= 0.03
