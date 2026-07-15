@@ -1,0 +1,33 @@
+.expenses-filters {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  gap: 16px;
+  padding: 16px 20px;
+  align-items: end;
+  margin-bottom: 20px;
+}
+
+.filter-apply-btn {
+  align-self: end;
+  white-space: nowrap;
+}
+
+.expenses-table-card {
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .expenses-filters {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filter-apply-btn {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 500px) {
+  .expenses-filters {
+    grid-template-columns: 1fr;
+  }
+}

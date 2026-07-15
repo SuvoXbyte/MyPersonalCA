@@ -1,0 +1,243 @@
+/* ── Balance Card ── */
+.balance-card {
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+
+.balance-card::before {
+  content: '';
+  position: absolute;
+  top: -60px;
+  right: -60px;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.balance-card-low {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+.balance-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.balance-card-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.balance-card-label {
+  font-size: 14px;
+  color: var(--text-secondary);
+  font-weight: 500;
+  flex: 1;
+}
+
+.balance-amount {
+  font-size: 36px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+  line-height: 1.1;
+}
+
+.balance-projected {
+  border-top: 1px solid var(--border-color);
+  padding-top: 14px;
+}
+
+.balance-projected-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.balance-projected-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+.balance-projected-amount {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.balance-alert {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ── Generic dash card ── */
+.dash-card {
+  padding: 0;
+  overflow: hidden;
+}
+
+.dash-card-header {
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.dash-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.dash-card-empty {
+  padding: 32px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* ── Obligation list ── */
+.obligation-list {
+  display: flex;
+  flex-direction: column;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.obligation-list-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-color);
+  gap: 12px;
+  transition: var(--transition);
+}
+
+.obligation-list-item:last-child {
+  border-bottom: none;
+}
+
+.obligation-list-item:hover {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.overdue-item {
+  border-left: 3px solid var(--accent-red);
+}
+
+.obligation-list-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.obligation-list-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.obligation-list-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.obligation-list-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.obligation-list-amount {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.obligation-list-date {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.upcoming-days {
+  color: var(--accent-amber);
+  font-weight: 600;
+}
+
+/* ── Budget progress ── */
+.budget-progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 8px 0;
+}
+
+.budget-progress-item {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.budget-progress-item:last-child {
+  border-bottom: none;
+}
+
+.budget-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.budget-category {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.budget-amounts {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.budget-sep {
+  color: var(--text-muted);
+}
+
+.budget-progress-footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 6px;
+}
+
+.budget-pct {
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.budget-remaining {
+  font-size: 12px;
+  color: var(--text-secondary);
+}

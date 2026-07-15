@@ -1,0 +1,129 @@
+.budget-card {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: var(--transition);
+}
+
+.budget-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-card), var(--shadow-glow);
+}
+
+.budget-card-red {
+  border-color: rgba(239, 68, 68, 0.3) !important;
+}
+
+.budget-card-amber {
+  border-color: rgba(245, 158, 11, 0.2) !important;
+}
+
+.budget-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.budget-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.budget-category-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.budget-dot-green { background: var(--accent-green); }
+.budget-dot-amber { background: var(--accent-amber); }
+.budget-dot-red { background: var(--accent-red); }
+
+.budget-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.budget-card-actions {
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.budget-card:hover .budget-card-actions {
+  opacity: 1;
+}
+
+.budget-spent-row {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.budget-spent {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.amount-amber {
+  color: var(--accent-amber);
+}
+
+.budget-of {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.budget-limit {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.budget-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 16px;
+}
+
+.budget-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.budget-meta-label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--text-muted);
+}
+
+.budget-meta-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.budget-overspend {
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+}
+
+.budget-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

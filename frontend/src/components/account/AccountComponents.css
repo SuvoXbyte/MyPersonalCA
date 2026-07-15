@@ -1,0 +1,123 @@
+/* History Table */
+.history-table-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.history-table-container {
+  overflow-x: auto;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.history-table thead th {
+  padding: 12px 16px;
+  text-align: left;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  border-bottom: 1px solid var(--border-color);
+  background: rgba(255, 255, 255, 0.02);
+  white-space: nowrap;
+}
+
+.history-table thead th.text-right {
+  text-align: right;
+}
+
+.history-table tbody td {
+  padding: 13px 16px;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: middle;
+}
+
+.history-row:last-child td {
+  border-bottom: none;
+}
+
+.history-row:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.history-date {
+  color: var(--text-secondary) !important;
+  font-size: 13px !important;
+  white-space: nowrap;
+}
+
+.history-desc {
+  color: var(--text-primary) !important;
+  max-width: 280px;
+}
+
+.history-change {
+  font-weight: 700;
+  font-size: 14px !important;
+  white-space: nowrap;
+}
+
+.history-balance {
+  font-weight: 600;
+  font-size: 14px !important;
+  color: var(--text-secondary) !important;
+  white-space: nowrap;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.history-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 16px;
+  border-top: 1px solid var(--border-color);
+}
+
+.history-page-info {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.history-empty {
+  padding: 40px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 14px;
+}
+
+/* Settings Form */
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.settings-form-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-color);
+}
+
+.settings-saved {
+  font-size: 13px;
+  color: var(--accent-green);
+  font-weight: 600;
+}

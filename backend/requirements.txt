@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+motor
+pydantic-settings
+httpx
+apscheduler
+matplotlib
+pillow
+python-dateutil
+pytz
