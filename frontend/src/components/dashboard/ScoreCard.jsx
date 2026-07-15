@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './ScoreCard.css';
 
 const getScoreColor = (score, max) => {
@@ -103,10 +103,10 @@ const ScoreCard = ({ score }) => {
       <div className="score-ring-wrap">
         <CircleProgress value={daily} max={10} size={108} strokeWidth={9} />
         <div className="score-center">
-          <span className="score-number" style={{ color }}>
-            <AnimatedNumber target={daily} />
+          <span className="score-fraction" style={{ color }}>
+            <span className="score-number"><AnimatedNumber target={daily} /></span>
+            <span className="score-denom">/10</span>
           </span>
-          <span className="score-denom">/10</span>
         </div>
       </div>
 
