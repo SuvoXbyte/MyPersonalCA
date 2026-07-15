@@ -12,26 +12,7 @@
   box-sizing: border-box;
 }
 
-/* Dynamic glow via CSS custom property set inline on the card element */
-.score-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    ellipse at center,
-    var(--score-glow, transparent) 0%,
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 0;
-  transition: background 1s ease;
-}
 
-/* All direct children float above the ::before glow */
-.score-card > * {
-  position: relative;
-  z-index: 1;
-}
 
 .score-title {
   font-size: 12px;
@@ -116,12 +97,4 @@
   letter-spacing: -0.5px;
 }
 
-/* Pulse glow animation for excellent score */
-@keyframes score-glow-pulse {
-  0%, 100% { opacity: 0.5; }
-  50%       { opacity: 1;   }
-}
 
-.score-card.score-excellent::before {
-  animation: score-glow-pulse 3s ease-in-out infinite;
-}

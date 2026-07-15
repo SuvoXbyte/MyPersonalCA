@@ -88,16 +88,9 @@ const ScoreCard = ({ score }) => {
 
   const color    = getScoreColor(daily, 10);
   const label    = getScoreLabel(daily, 10);
-  const isExcellent = daily / 10 >= 0.8;
-
-  // Pass glow color as CSS custom property — no extra div needed
-  const glowRgba = `${color}26`; // ~15% opacity hex → use rgba trick via inline style
 
   return (
-    <div
-      className={`score-card glass-card${isExcellent ? ' score-excellent' : ''}`}
-      style={{ '--score-glow': `${color}26` }}
-    >
+    <div className="score-card glass-card">
       <div className="score-title">Daily Score</div>
 
       <div className="score-ring-wrap">
