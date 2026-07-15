@@ -26,7 +26,8 @@ const ExpensesPage = () => {
     end_date: today(),
     category: '',
   });
-  const [total, setTotal] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const [totalAmount, setTotalAmount] = useState(0);
   const { showToast } = useToast();
   const { confirm, ConfirmUI } = useConfirm();
 
@@ -40,8 +41,9 @@ const ExpensesPage = () => {
       const data = await getPayments(params);
       const items = Array.isArray(data) ? data : data?.items ?? [];
       setExpenses(items);
-      const t = items.reduce((s, e) => s + (e.amount || 0), 0);
-      setTotal(data?.total ?? t);
+      const sum = items.reduce((s, e) => s + (e.amount || 0), 0);
+      setTotalCount(data?.total ?? items.length);
+      setTotalAmount(sum);
     } catch (err) {
       showToast(err.message || 'Failed to load expenses', 'error');
     } finally {
@@ -151,7 +153,8 @@ const ExpensesPage = () => {
           <ExpenseTable
             expenses={expenses}
             onDelete={handleDelete}
-            total={total}
+            totalCount={totalCount}
+            totalAmount={totalAmount}
           />
         )}
       </div>

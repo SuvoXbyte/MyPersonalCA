@@ -5,7 +5,7 @@ import EmptyState from '../common/EmptyState';
 import { Receipt } from 'lucide-react';
 import './ExpenseTable.css';
 
-const ExpenseTable = ({ expenses = [], onDelete, total }) => {
+const ExpenseTable = ({ expenses = [], onDelete, totalAmount, totalCount }) => {
   if (expenses.length === 0) {
     return (
       <EmptyState
@@ -63,11 +63,13 @@ const ExpenseTable = ({ expenses = [], onDelete, total }) => {
         </table>
       </div>
 
-      {total !== undefined && (
+      {totalCount !== undefined && totalAmount !== undefined && (
         <div className="expense-total">
-          <span className="expense-total-label">Total</span>
+          <span className="expense-total-label">
+            Total ({totalCount} {totalCount === 1 ? 'expense' : 'expenses'})
+          </span>
           <span className="expense-total-amount amount-negative">
-            -{formatCurrency(total)}
+            -{formatCurrency(totalAmount)}
           </span>
         </div>
       )}
