@@ -199,6 +199,74 @@ async def get_dashboard_data() -> dict:
     result_today = await db.payments.aggregate(pipeline_today).to_list(length=1)
     spent_today = result_today[0]["total"] if result_today else 0.0
 
+    # --- Daily Score (0–10) based on spending vs daily budget ---
+    if daily_budget > 0:
+        ratio = spent_today / daily_budget
+        if spent_today == 0:
+            daily_score = 8   # conservative, no spending yet
+        elif ratio <= 0.8:
+            daily_score = 10  # excellent
+        elif ratio <= 1.0:
+            daily_score = 8   # within budget
+        elif ratio <= 1.3:
+            daily_score = 6   # slightly over
+        elif ratio <= 1.6:
+            daily_score = 4   # over budget
+        elif ratio <= 2.0:
+            daily_score = 2   # badly over
+        else:
+            daily_score = 0   # way over
+    else:
+        daily_score = 7  # neutral when no balance to divide
+
+    # --- Monthly Score (0–100): calculate on 1st of month for previous month ---
+    prev_month_score = account.get("last_monthly_score", None)
+    prev_month_score_label = account.get("last_monthly_score_month", None)
+
+    if local_today.day == 1:
+        # Calculate score for the previous month
+        prev_month = local_today.month - 1 if local_today.month > 1 else 12
+        prev_year = local_today.year if local_today.month > 1 else local_today.year - 1
+        prev_month_str = f"{prev_year}-{prev_month:02d}"
+
+        if account.get("last_monthly_score_month") != prev_month_str:
+            prev_days = calendar.monthrange(prev_year, prev_month)[1]
+            prev_start = datetime(prev_year, prev_month, 1, tzinfo=timezone.utc)
+            prev_end = datetime(prev_year, prev_month, prev_days, 23, 59, 59, tzinfo=timezone.utc)
+
+            prev_budgets = await db.budgets.find({"month": prev_month_str}).to_list(length=500)
+            total_score_points = 0
+            total_possible = 0
+
+            for b in prev_budgets:
+                limit = b.get("monthly_limit", 0.0)
+                if limit <= 0:
+                    continue
+                cat_pipeline = [
+                    {"$match": {"category": b["category"], "date": {"$gte": prev_start, "$lte": prev_end}}},
+                    {"$group": {"_id": None, "total": {"$sum": "$amount"}}},
+                ]
+                cat_result = await db.payments.aggregate(cat_pipeline).to_list(length=1)
+                cat_spent = cat_result[0]["total"] if cat_result else 0.0
+                # 100 points if within budget, proportional deduction if over
+                cat_score = max(0, min(100, round((1 - max(0, cat_spent - limit) / limit) * 100)))
+                total_score_points += cat_score
+                total_possible += 100
+
+            if total_possible > 0:
+                computed_score = round(total_score_points / total_possible * 100)
+            else:
+                # No budgets set — score based on balance remaining vs start of month
+                computed_score = min(100, max(0, round((current_balance / max(1, current_balance + spent_today)) * 100)))
+
+            prev_month_score = computed_score
+            prev_month_score_label = prev_month_str
+            await db.account.update_one(
+                {"_id": "singleton"},
+                {"$set": {"last_monthly_score": computed_score, "last_monthly_score_month": prev_month_str}},
+            )
+            logger.info("Monthly score for %s calculated: %d/100", prev_month_str, computed_score)
+
     return {
         "balance": {
             "current": current_balance,
@@ -218,5 +286,10 @@ async def get_dashboard_data() -> dict:
             "limit": round(daily_budget, 2),
             "spent_today": round(spent_today, 2),
             "remaining_days": remaining_days,
+        },
+        "score": {
+            "daily": daily_score,
+            "monthly": prev_month_score,
+            "monthly_label": prev_month_score_label,
         },
     }

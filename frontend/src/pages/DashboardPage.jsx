@@ -8,7 +8,7 @@ import UpcomingCard from '../components/dashboard/UpcomingCard';
 import BudgetProgressCard from '../components/dashboard/BudgetProgressCard';
 import SpendingTrendChart from '../components/dashboard/SpendingTrendChart';
 import CategoryPieChart from '../components/dashboard/CategoryPieChart';
-import StreakBadge from '../components/dashboard/StreakBadge';
+import ScoreCard from '../components/dashboard/ScoreCard';
 import DailyBudgetCard from '../components/dashboard/DailyBudgetCard';
 import LoadingSpinner from '../components/common/LoadingSpinner';
 import './DashboardPage.css';
@@ -67,14 +67,11 @@ const DashboardPage = () => {
         </div>
       </div>
 
-      {/* Row 1: Balance + Daily Budget + Streak */}
+      {/* Row 1: Balance + Daily Budget + Score */}
       <div className="dashboard-top-row">
         <BalanceCard data={data} />
         <DailyBudgetCard dailyBudget={data?.daily_budget} />
-        <StreakBadge
-          streak={data?.habit_streak ?? 0}
-          message={data?.streak_message}
-        />
+        <ScoreCard score={data?.score} />
       </div>
 
       {/* Row 2: Overdue */}
