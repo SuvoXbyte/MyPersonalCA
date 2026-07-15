@@ -183,10 +183,7 @@ async def get_dashboard_data() -> dict:
     days_in_month_local = calendar.monthrange(local_today.year, local_today.month)[1]
     remaining_days = days_in_month_local - local_today.day + 1
 
-    # Daily budget = current balance ÷ remaining days in month
-    daily_budget = current_balance / remaining_days if remaining_days > 0 else 0.0
-
-    # Today's expense total (IST timezone)
+    # --- Today's expense total (IST timezone) ---
     today_start_local = datetime(local_today.year, local_today.month, local_today.day, 0, 0, 0)
     today_end_local = datetime(local_today.year, local_today.month, local_today.day, 23, 59, 59)
     today_start_utc = kolkata_tz.localize(today_start_local).astimezone(timezone.utc)
@@ -198,6 +195,12 @@ async def get_dashboard_data() -> dict:
     ]
     result_today = await db.payments.aggregate(pipeline_today).to_list(length=1)
     spent_today = result_today[0]["total"] if result_today else 0.0
+
+    # --- Daily Budget Calculations ---
+    # Daily budget = (current balance + spent today) ÷ remaining days in month
+    # This keeps the daily limit constant throughout the day even as balance drops from today's expenses.
+    start_of_day_balance = current_balance + spent_today
+    daily_budget = start_of_day_balance / remaining_days if remaining_days > 0 else 0.0
 
     # --- Daily Score (0–10) based on spending vs daily budget ---
     if daily_budget > 0:
