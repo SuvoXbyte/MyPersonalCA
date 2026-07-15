@@ -205,17 +205,15 @@ async def get_dashboard_data() -> dict:
     # --- Daily Score (0–10) based on spending vs daily budget ---
     if daily_budget > 0:
         ratio = spent_today / daily_budget
-        if spent_today == 0:
-            daily_score = 8   # conservative, no spending yet
-        elif ratio <= 0.8:
+        if ratio <= 0.8:
             daily_score = 10  # excellent
         elif ratio <= 1.0:
             daily_score = 8   # within budget
-        elif ratio <= 1.3:
+        elif ratio <= 1.15:
             daily_score = 6   # slightly over
-        elif ratio <= 1.6:
+        elif ratio <= 1.3:
             daily_score = 4   # over budget
-        elif ratio <= 2.0:
+        elif ratio <= 1.5:
             daily_score = 2   # badly over
         else:
             daily_score = 0   # way over

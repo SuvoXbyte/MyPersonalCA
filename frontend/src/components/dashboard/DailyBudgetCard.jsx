@@ -33,6 +33,14 @@ const DailyBudgetCard = ({ dailyBudget }) => {
           </span>
         </div>
 
+        <div className="balance-projected-row" style={{ marginTop: '4px', opacity: 0.9 }}>
+          <Activity size={14} color={isOverspent ? 'var(--accent-red)' : 'var(--accent-green)'} style={{ visibility: 'hidden' }} />
+          <span className="balance-projected-label">{isOverspent ? 'Overspent today:' : 'Saved today:'}</span>
+          <span className={`balance-projected-amount ${isOverspent ? 'amount-negative' : 'amount-positive'}`}>
+            {isOverspent ? '-' : '+'}{formatCurrency(Math.abs(limit - spentToday))}
+          </span>
+        </div>
+
         <div className="balance-projected-row" style={{ marginTop: '4px', opacity: 0.8 }}>
           <span className="balance-projected-label">Days left in month:</span>
           <span className="upcoming-days">{remainingDays} days</span>
