@@ -48,8 +48,8 @@ const DashboardPage = () => {
     return <LoadingSpinner center size="xl" text="Loading dashboard..." />;
   }
 
-  const fixedTotal = data?.spending_split?.fixed ?? 0;
-  const variableTotal = data?.spending_split?.variable ?? 0;
+  const fixedTotal = data?.fixed_spending?.total ?? 0;
+  const variableTotal = data?.variable_spending?.total ?? 0;
   const splitTotal = fixedTotal + variableTotal;
 
   return (
@@ -70,22 +70,22 @@ const DashboardPage = () => {
       <div className="dashboard-top-row">
         <BalanceCard data={data} />
         <StreakBadge
-          streak={data?.payment_streak ?? 0}
+          streak={data?.habit_streak ?? 0}
           message={data?.streak_message}
         />
       </div>
 
       {/* Row 2: Overdue */}
       <OverdueCard
-        items={data?.overdue_items ?? []}
+        items={data?.overdue ?? []}
         onMarkPaid={handleMarkPaid}
       />
 
       {/* Row 3: Upcoming */}
-      <UpcomingCard items={data?.upcoming_items ?? []} />
+      <UpcomingCard items={data?.upcoming_dues ?? []} />
 
       {/* Row 4: Budget progress */}
-      <BudgetProgressCard budgets={data?.budgets ?? []} />
+      <BudgetProgressCard budgets={data?.budget_summary ?? []} />
 
       {/* Row 5: Charts */}
       <div className="dashboard-charts-row">

@@ -3,9 +3,9 @@ import { formatCurrency } from '../../utils/formatters';
 import './DashboardCards.css';
 
 const BalanceCard = ({ data }) => {
-  const balance = data?.current_balance ?? 0;
+  const balance = data?.balance?.current ?? 0;
   const projected = data?.projected_balance ?? null;
-  const isLow = data?.is_low_balance;
+  const isLow = data?.balance?.is_low ?? false;
 
   return (
     <div className={`balance-card glass-card ${isLow ? 'balance-card-low' : ''}`}>
@@ -43,11 +43,14 @@ const BalanceCard = ({ data }) => {
         </div>
       )}
 
-      {data?.total_overdue > 0 && (
-        <div className="balance-alert">
-          <span className="amount-negative">⚠ {formatCurrency(data.total_overdue)} overdue</span>
-        </div>
-      )}
+      {(() => {
+        const overdueTotal = data?.overdue?.reduce((sum, item) => sum + item.amount, 0) ?? 0;
+        return overdueTotal > 0 ? (
+          <div className="balance-alert">
+            <span className="amount-negative">⚠ {formatCurrency(overdueTotal)} overdue</span>
+          </div>
+        ) : null;
+      })()}
     </div>
   );
 };
