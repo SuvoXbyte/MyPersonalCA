@@ -64,6 +64,12 @@ class DailyBudgetInfo(BaseModel):
     remaining_days: int
 
 
+class ScoreInfo(BaseModel):
+    daily: int
+    monthly: Optional[int] = None
+    monthly_label: Optional[str] = None
+
+
 class DashboardResponse(BaseModel):
     balance: BalanceInfo
     projected_balance: float
@@ -76,3 +82,4 @@ class DashboardResponse(BaseModel):
     category_breakdown: List[CategoryBreakdownItem]
     habit_streak: int
     daily_budget: DailyBudgetInfo
+    score: ScoreInfo
