@@ -1,4 +1,4 @@
-import { CalendarRange, Activity, HelpCircle } from 'lucide-react';
+import { CalendarRange, Activity } from 'lucide-react';
 import { formatCurrency } from '../../utils/formatters';
 import './DashboardCards.css';
 
@@ -32,20 +32,11 @@ const DailyBudgetCard = ({ dailyBudget }) => {
             {formatCurrency(spentToday)}
           </span>
         </div>
-        
-        {limit > 0 ? (
-          <div className="balance-projected-row" style={{ marginTop: '4px', opacity: 0.8 }}>
-            <span className="balance-projected-label">Remaining days:</span>
-            <span className="upcoming-days">{remainingDays} days</span>
-          </div>
-        ) : (
-          <div className="balance-projected-row" style={{ marginTop: '4px', opacity: 0.6 }}>
-            <HelpCircle size={12} style={{ marginRight: '4px' }} />
-            <span className="balance-projected-label" style={{ fontSize: '0.75rem' }}>
-              Set monthly budget to activate
-            </span>
-          </div>
-        )}
+
+        <div className="balance-projected-row" style={{ marginTop: '4px', opacity: 0.8 }}>
+          <span className="balance-projected-label">Days left in month:</span>
+          <span className="upcoming-days">{remainingDays} days</span>
+        </div>
       </div>
     </div>
   );
